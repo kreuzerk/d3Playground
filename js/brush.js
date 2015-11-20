@@ -4,25 +4,13 @@
 
 var svg = d3.select("#brushsvg");
 
-var data = pics.data.children;
-
-//convert to time stamp
-data.forEach(function(d){
-   d.data.created *= 1000;
-});
-
-var extent = d3.extent(data, function(d){
-    return d.data.created;
-});
-
-console.log(extent);
-
-var scale = d3.time.scale()
-    .domain(extent)
+var scale = d3.scale.linear()
+    .domain([20, 100])
     .range([10, 500]);
 
 var brush = d3.svg.brush();
 brush.x(scale);
+brush.extent([50, 60]);
 
 brush.on("brushend", function(){
     console.log(brush.extent())
