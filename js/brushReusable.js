@@ -58,7 +58,6 @@ d3.chart.brush = function(){
 
         brush(g);
 
-        g.attr("transform", "translate(50, 100)");
         g.selectAll("rect").attr("height", height);
         g.selectAll(".background")
             .style({fill: "#4B9E9E", visibility: "visible"});

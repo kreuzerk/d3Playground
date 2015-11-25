@@ -20,8 +20,11 @@ d3.json("json/pics.json", function (error, pics) {
     scatterplot(svgGroup);
 
     //Create the "Brush" Containter
-    var brushGroup = gluedsvg.append("g");
+    var brushGroup = gluedsvg.append("g")
+        .attr("transform", "translate(0, 400)");
     var brush = d3.chart.brush();
+        brush.width(700);
     brush.data(data);
     brush(brushGroup);
+
 });
