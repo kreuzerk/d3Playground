@@ -12,9 +12,16 @@ d3.json("json/pics.json", function (error, pics) {
     transformCreatedToMilis(data);
 
     var gluedsvg = d3.select("#gluedsvg");
-    //Create the container
-    var g = gluedsvg.append("g");
+
+    //Create the "SVG" container
+    var svgGroup = gluedsvg.append("g");
     var scatterplot = d3.chart.scatter();
     scatterplot.data(data);
-    scatterplot(g);
+    scatterplot(svgGroup);
+
+    //Create the "Brush" Containter
+    var brushGroup = gluedsvg.append("g");
+    var brush = d3.chart.brush();
+    brush.data(data);
+    brush(brushGroup);
 });
