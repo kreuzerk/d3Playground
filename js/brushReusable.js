@@ -66,6 +66,19 @@ d3.chart.brush = function(){
         g.selectAll(".resize rect")
             .style({fill: "#276C86", visibility: "visible"});
 
+        var axis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom")
+            .tickValues([new Date(extent[0]), new Date(extent[0] + (extent[1]-extent[0])/2), new Date(extent[1])])
+
+        var axisGroup = g.append("g");
+        axis(axisGroup);
+        axisGroup.attr("transform", "translate(0, 0)");
+        axisGroup.selectAll("path")
+            .style({ fill: "none", stroke: "#000"});
+        axisGroup.selectAll("line")
+            .style({ stroke: "#000"});
+
         /*
          Use a class rects.events otherwise there can be problems with other classes
          For example: The brush consits of 4 rects.
