@@ -2,31 +2,44 @@
  * Created by Kiwi on 24.11.15.
  */
 
+if(!d3.chart){
+    d3.chart = {};
+}
+
 d3.chart.scatter = function(){
+    var g;
     var data;
-    var width;
+    var width = 400;
+    var height = 400;
 
     function chart(container){
-        var svg = d3.select("#scatterplotsvg");
-        var data = pics.data.children;
+        g = container;
+
         var maxScore = d3.max(data, function(d){ return d.data.score});
+
+        var xSqale = d3.time.scale()
+            .domain(d3.extent(data, function(d){
+                return d.data.created;
+            }))
+            .range([0, width]);
 
         var ySqale = d3.scale.linear()
             .domain([0, maxScore])
-            .range([400, 0]);
+            .range([height, 0]);
 
-        var g = svg.append("g");
         var circles = g.selectAll("circle")
             .data(data);
 
         circles.enter()
             .append("circle")
             .attr({
-                cx: function(d, i){ return 20 + i * 15},
+                cx: function(d, i){ return xSqale(d.data.created)},
                 cy: function(d){ return ySqale(d.data.score) },
                 r: 5
             })
-            .on("mouseover", function (d){ console.log(d.data.score)});
+            .on("mouseover", function (d){ console.log(d.data.created)});
+
+        circles.exit().remove();
     }
 
     chart.data = function(value){
@@ -39,9 +52,17 @@ d3.chart.scatter = function(){
 
     chart.width = function(value){
         if(!arguments.length){
-            return data;
+            return width;
         }
-        data = value;
+        width = value;
+        return chart;
+    };
+
+    chart.height = function(value){
+        if(!arguments.length){
+            return height;
+        }
+        height = value;
         return chart;
     };
 
