@@ -7,6 +7,7 @@ d3.chart.brush = function(){
     var data;
     var width = 600;
     var height = 30;
+    var dispatch = d3.dispatch(chart, "filter");
 
     function chart(container){
         var g = container;
@@ -53,7 +54,9 @@ d3.chart.brush = function(){
                 .data(filtereddata, function(d){ return d.data.id})
                 .style({
                     stroke: "white"
-                })
+                });
+
+            dispatch.filter(filtereddata);
         });
 
         brush(g);
@@ -97,6 +100,7 @@ d3.chart.brush = function(){
             width: 2
         });
 
+
         //rects.exit().remove();
     }
 
@@ -124,5 +128,16 @@ d3.chart.brush = function(){
         return chart;
     };
 
-    return chart;
+    /*
+    This is a really confusing thing. But in general there are 3 Steps that matter.
+    1. Setting up the dispatch (at the biginning)
+    2. Using it insight the "brushened"
+    3. And then rebinding.
+     */
+
+    /*
+    Rebind says that I want the on Method from dispatch to work on chart.
+     */
+    return d3.rebind(chart, dispatch, "on");
 };
+
