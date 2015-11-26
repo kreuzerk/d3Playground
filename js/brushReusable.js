@@ -70,10 +70,11 @@ d3.chart.brush = function(){
             .scale(xScale)
             .orient("bottom")
             .tickValues([new Date(extent[0]), new Date(extent[0] + (extent[1]-extent[0])/2), new Date(extent[1])])
+            .tickFormat(d3.time.format("%x %H %M"));
 
         var axisGroup = g.append("g");
         axis(axisGroup);
-        axisGroup.attr("transform", "translate(0, 0)");
+        axisGroup.attr("transform", "translate(" + [0, height] + ")");
         axisGroup.selectAll("path")
             .style({ fill: "none", stroke: "#000"});
         axisGroup.selectAll("line")
