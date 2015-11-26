@@ -27,8 +27,10 @@ d3.json("json/pics.json", function (error, pics) {
     brush.data(data);
     brush(brushGroup);
 
-    brush.on("filter", function(data){
-        console.log("filtered", data);
+    brush.on("filter", function(selecteddata){
+        console.log("filtered", selecteddata);
+        scatterplot.data(selecteddata);
+        scatterplot(svgGroup);
     });
 
 });
